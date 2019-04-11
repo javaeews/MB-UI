@@ -1,0 +1,73 @@
+<h4>Üdv' {{ title }}!</h4>
+<mat-card>
+  <form [formGroup]="uploadForm" (ngSubmit)="uploadSubmit()">
+      <ngx-loading-bar [color]="'red'"></ngx-loading-bar>
+    <mat-card-content>
+      <mat-form-field class="example-full-width">
+        <input formControlName="xx" matInput placeholder="Szélesség">
+      </mat-form-field>
+      <br>
+      <mat-form-field class="example-full-width">
+        <input formControlName="yy" matInput placeholder="Magasság">
+      </mat-form-field>
+
+      <br>
+      <input formControlName="document" type="file" ng2FileSelect accept=".png, .jpg, .pdf" [uploader]="uploader"
+        multiple /><br />
+      <br>
+      <div class="drop-zone">
+        <div ng2FileDrop [uploader]="uploader" class="drop-zone">
+          Drag and drop opció
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th width="90%">
+              File neve
+            </th>
+            <th width="10%">
+              Töröl
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of uploader.queue">
+            <th width="90%">
+              {{ item.file.name}}
+            </th>
+            <th class="text-center" width="10%">
+              <mat-icon (click)="item.remove()">delete</mat-icon>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <button mat-raised-button color="accent" [disabled]="!uploadForm.valid || uploader.queue.length == 0"
+        type="submit">Átméretezés</button>
+      <br>
+      <br>
+      <br>
+      <button mat-raised-button color="accent" [disabled]="uploader.queue.length == 0"
+      type="button" (click)="downloadFileExample()">Letöltés</button>
+      <br>
+      <br>
+      <table>
+        <thead>
+          <tr>
+            <th>
+              Előnézet
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of uploader.queue">
+            <th>
+              <ngx-imageviewer [src]="item._file"></ngx-imageviewer>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </mat-card-content>
+  </form>
+</mat-card>
